@@ -29,7 +29,9 @@ def emboss_filter(img, K_size=3):
 	tmp = out.copy()
 
 	# emboss kernel
-	K = [[-2., -1., 0.],[-1., 1., 1.], [0., 1., 2.]]
+	K = [[-2., -1., 0.],
+		 [-1., 1., 1.],
+		 [0., 1., 2.]]
 
 	# filtering
 	for y in range(H):
@@ -43,10 +45,11 @@ def emboss_filter(img, K_size=3):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float)
+img = cv2.imread("example.jpg").astype(np.float)
 
 # grayscale
 gray = BGR2GRAY(img)
+
 
 # emboss filtering
 out = emboss_filter(gray, K_size=3)

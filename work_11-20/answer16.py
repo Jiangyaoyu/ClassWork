@@ -38,9 +38,13 @@ def prewitt_filter(img, K_size=3):
 	out_h = out.copy()
 
 	## prewitt vertical kernel
-	Kv = [[-1., -1., -1.],[0., 0., 0.], [1., 1., 1.]]
+	Kv = [[-1., -1., -1.],
+		  [0., 0., 0.],
+		  [1., 1., 1.]]
 	## prewitt horizontal kernel
-	Kh = [[-1., 0., 1.],[-1., 0., 1.],[-1., 0., 1.]]
+	Kh = [[-1., 0., 1.],
+		  [-1., 0., 1.],
+		  [-1., 0., 1.]]
 
 	# filtering
 	for y in range(H):
@@ -55,16 +59,16 @@ def prewitt_filter(img, K_size=3):
 	out_v = out_v[pad: pad + H, pad: pad + W].astype(np.uint8)
 	out_h = out_h[pad: pad + H, pad: pad + W].astype(np.uint8)
 
-	return out_v, out_h
+	return out_v, out_h,out_h+out_v
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float)
+img = cv2.imread("example.jpg").astype(np.float)
 
 # grayscale
 gray = BGR2GRAY(img)
 
 # prewitt filtering
-out_v, out_h = prewitt_filter(gray, K_size=3)
+out_v, out_h,out = prewitt_filter(gray, K_size=3)
 
 
 # Save result
@@ -72,3 +76,4 @@ cv2.imwrite("out_v16.jpg", out_v)
 
 
 cv2.imwrite("out_h16.jpg", out_h)
+cv2.imwrite("out_d16.jpg", out)

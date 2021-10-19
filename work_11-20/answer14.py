@@ -29,20 +29,32 @@ def different_filter(img,K_size=3):
 
 	out_v = out.copy()
 	out_h = out.copy()
+	out_d = out.copy()
 
-	# vertical kernel
-	Kv = [[0., -1., 0.], [0., 1., 0.], [0., 0., 0.]]
-	# horizontal kernel
-	Kh = [[0., 0., 0.], [-1., 1., 0.], [0., 0., 0.]]
+	# 垂直方向
+	Kv = [[0., -1., 0.],
+		  [0., 1., 0.],
+		  [0., 0., 0.]]
+	# 水平方向
+	Kh = [[0., 0., 0.],
+		  [-1., 1., 0.],
+		  [0., 0., 0.]]
+	# 对角线方向
+	Dh = [[-1., 0., 0.],
+		  [0., 1., 0.],
+		  [0., 0., 0.]]
 
 	# filtering
 	for y in range(H):
 		for x in range(W):
 			out_v[pad + y, pad + x] = np.sum(Kv * (tmp[y: y + K_size, x: x + K_size]))
 			out_h[pad + y, pad + x] = np.sum(Kh * (tmp[y: y + K_size, x: x + K_size]))
+			out_d[pad + y, pad + x] = np.sum(Dh * (tmp[y: y + K_size, x: x + K_size]))
 
 	out_v = np.clip(out_v, 0, 255)
 	out_h = np.clip(out_h, 0, 255)
+	out_d = np.clip(out_d, 0, 255)
+
 	'''
 	np.clip(a,a_min,a_max,out=None]
 	clip这个函数将将数组中的元素限制在a_min, a_max之间，
@@ -51,15 +63,18 @@ def different_filter(img,K_size=3):
 
 	out_v = out_v[pad: pad + H, pad: pad + W].astype(np.uint8)
 	out_h = out_h[pad: pad + H, pad: pad + W].astype(np.uint8)
+	out_d = out_d[pad: pad + H, pad: pad + W].astype(np.uint8)
 
-	return out_v, out_h
+	return out_v, out_h ,out_d,out_h+out_v
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float)
+img = cv2.imread("example.jpg").astype(np.float)
 
 # grayscale
 gray = BGR2GRAY(img)
 # different filtering
-out_v, out_h = different_filter(gray, K_size=3)
+out_v, out_h ,out_d,out= different_filter(gray, K_size=3)
 
 cv2.imwrite("out14_v.jpg", out_v)
 cv2.imwrite("out14_h.jpg", out_h)
+cv2.imwrite("out14_d.jpg", out_d)
+cv2.imwrite("out14.jpg", out_d)
