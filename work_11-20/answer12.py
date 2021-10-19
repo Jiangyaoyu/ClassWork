@@ -30,3 +30,11 @@ def motion_filter(img,K_size):
     out = out[pad: pad + H, pad: pad + W].astype(np.uint8)
 
     return out
+# Read image
+img = cv2.imread("example.jpg")
+
+# motion filtering
+out = motion_filter(img, K_size=3)
+
+# Save result
+cv2.imwrite("out12.jpg", out)
