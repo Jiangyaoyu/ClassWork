@@ -13,10 +13,10 @@ def nn_interpolate(img, ax=1, ay=1):
 	x = np.tile(np.arange(aW), (aH, 1))
 	y = np.round(y / ay).astype(np.int)
 	x = np.round(x / ax).astype(np.int)
-	out = img[y,x]
+
+	out = img[y,x]#获取对应坐标值
 
 	out = out.astype(np.uint8)
-
 	return out
 
 

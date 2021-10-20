@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 
 
 # affine
-def affine(img, a, b, c, d, tx, ty):
-	H, W, C = img.shape
+def affine(_img, a, b, c, d, tx, ty):
+	H, W, C = _img.shape
 
 	# temporary image
 	img = np.zeros((H+2, W+2, C), dtype=np.float32)
-	img[1:H+1, 1:W+1] = img
+	img[1:H+1, 1:W+1] = _img
 
 	# get shape of new image
 	H_new = np.round(H).astype(np.int)
@@ -42,7 +42,7 @@ def affine(img, a, b, c, d, tx, ty):
 	return out
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("example.jpg").astype(np.float32)
 
 
 # Affine

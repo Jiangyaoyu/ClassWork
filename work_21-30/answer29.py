@@ -1,15 +1,17 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
+'''
+仿射变换-放大缩小
+'''
 
 # Affine
-def affine(img, a, b, c, d, tx, ty):
-  	H, W, C = img.shape
+def affine(_img, a, b, c, d, tx, ty):
+	H, W, C = _img.shape
 
 	# temporary image
-	img = np.zeros((H+2, W+2, C), dtype=np.float32)
-	img[1:H+1, 1:W+1] = img
+	img = np.zeros((H + 2, W + 2, C), dtype=np.float32)
+	img[1:H + 1, 1:W + 1] = _img
 
 	# get new image shape
 	H_new = np.round(H * d).astype(np.int)
@@ -38,10 +40,10 @@ def affine(img, a, b, c, d, tx, ty):
 
 
 # Read image
-img = cv2.imread("imori.jpg").astype(np.float32)
+img = cv2.imread("example.jpg").astype(np.float32)
 
 # Affine
-out = affine(img, a=1.3, b=0, c=0, d=0.8, tx=30, ty=-30)
+out = affine(img, a=1.3, b=0, c=0, d=0.8, tx=0, ty=0)
 
 
 # Save result

@@ -1,15 +1,17 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
+"""
+参考：https://www.jianshu.com/p/1cfb3fac3798
+"""
 
 # Affine
-def affine(img, a, b, c, d, tx, ty):
-  	H, W, C = img.shape
+def affine(_img, a, b, c, d, tx, ty):
+	H, W, C = _img.shape
 
 	# temporary image
 	img = np.zeros((H+2, W+2, C), dtype=np.float32)
-	img[1:H+1, 1:W+1] = img
+	img[1:H+1, 1:W+1] = _img
 
 	# get new image shape
 	H_new = np.round(H * d).astype(np.int)
@@ -20,11 +22,12 @@ def affine(img, a, b, c, d, tx, ty):
 	x_new = np.tile(np.arange(W_new), (H_new, 1))
 	y_new = np.arange(H_new).repeat(W_new).reshape(H_new, -1)
 
-	# get position of original image by affine
+	# 计算目标图像坐标对应的原图像坐标
 	adbc = a * d - b * c
 	x = np.round((d * x_new  - b * y_new) / adbc).astype(np.int) - tx + 1
 	y = np.round((-c * x_new + a * y_new) / adbc).astype(np.int) - ty + 1
 
+	# 对原图像坐标中溢出的坐标进行截断处理（取边界值）
 	x = np.minimum(np.maximum(x, 0), W+1).astype(np.int)
 	y = np.minimum(np.maximum(y, 0), H+1).astype(np.int)
 
