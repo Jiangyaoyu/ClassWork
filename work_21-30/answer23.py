@@ -10,11 +10,8 @@ import matplotlib.pyplot as plt
 def hist_equal(img, z_max=255):
 	H, W, C = img.shape
 	S = H * W * C * 1.
-
 	out = img.copy()
-
 	sum_h = 0.
-
 	for i in range(1, 255):
 		ind = np.where(img == i)
 		sum_h += len(img[ind])

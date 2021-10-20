@@ -35,5 +35,5 @@ out = hist_normalization(img)
 
 # Display histogram
 plt.hist(out.ravel(), bins=255, rwidth=0.8, range=(0, 255))
-plt.savefig("out_his21.png")
-cv2.imwrite("out21.jpg", out)
+plt.savefig("out_his21_1.png")
+cv2.imwrite("out21_1.jpg", out)
